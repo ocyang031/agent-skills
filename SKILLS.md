@@ -27,40 +27,44 @@
 | github | GitHub API integration with managed OAuth. Access repositories, issues, pull requests, commits, branches, and users. Use this skill when users want to interact with GitHub repositories, manage issues and PRs, search code, or automate workflows. For other third party apps, use the api-gateway skill ( |
 | ima-skill | 统一的 IMA OpenAPI 技能，支持笔记管理和知识库操作。 当用户提到知识库、资料库、笔记、备忘录、记事，或者想要上传文件、添加网页到知识库、 搜索知识库内容、搜索/浏览/创建/编辑笔记时，使用此 skill。 即使用户没有明确说"知识库"或"笔记"，只要意图涉及文件上传到知识库、网页收藏、 知识搜索、个人文档存取（如"帮我记一下"、"搜一下知识库里有没有XX"），也应触发此 skill。 |
 | matt/ask-matt | Ask which skill or flow fits your situation. A router over the skills in this repo. |
+| matt/chief-of-staff | Pursue a long-running goal in a single session by co-ordinating subagents. |
 | matt/claude-handoff | Hand the current conversation off to a fresh background agent that picks up the work immediately. |
-| matt/code-review | Review the changes since a fixed point (commit, branch, tag, or merge-base) along two axes — Standards (does the code follow this repo's documented coding standards?) and Spec (does the code match what the originating issue/spec asked for?). Runs both reviews in parallel sub-agents and reports them  |
+| matt/code-review | Review the changes since a fixed point (commit, branch, tag, or merge-base) along two axes: Standards (does the code follow this repo's documented coding standards?) and Spec (does the code match what the originating issue/spec asked for?). Runs both reviews in parallel sub-agents and reports them s |
 | matt/codebase-design | Shared vocabulary for designing deep modules. Use when the user wants to design or improve a module's interface, find deepening opportunities, decide where a seam goes, make code more testable or AI-navigable, or when another skill needs the deep-module vocabulary. |
 | matt/diagnosing-bugs | Diagnosis loop for hard bugs and performance regressions. Use when the user says "diagnose"/"debug this", or reports something broken/throwing/failing/slow. |
-| matt/domain-modeling | Build and sharpen a project's domain model. Use when the user wants to pin down domain terminology or a ubiquitous language, record an architectural decision, or when another skill needs to maintain the domain model. |
+| matt/domain-modeling | Build and sharpen a project's domain model. Use when discussing codebase terminology, writing or editing a GLOSSARY.md, or recording or editing an ADR. |
 | matt/git-guardrails-claude-code | Set up Claude Code hooks to block dangerous git commands (push, reset --hard, clean, branch -D, etc.) before they execute. Use when user wants to prevent destructive git operations, add git safety hooks, or block git push/reset in Claude Code. |
 | matt/grill-me | A relentless interview to sharpen a plan or design. |
 | matt/grill-with-docs | A relentless interview to sharpen a plan or design, which also creates docs (ADR's and glossary) as we go. |
 | matt/grilling | Grill the user relentlessly about a plan, decision, or idea. Use when the user wants to stress-test their thinking, or uses any 'grill' trigger phrases. |
 | matt/handoff | Compact the current conversation into a handoff document for another agent to pick up. |
 | matt/implement | Implement a piece of work based on a spec or set of tickets. |
+| matt/implement-spec | Implement the result of /to-spec and /to-tickets in code. |
 | matt/improve-codebase-architecture | Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick. |
 | matt/loop-me | Grill me about specs for the workflows I want to build, within this workspace. |
 | matt/migrate-to-shoehorn | Migrate test files from `as` type assertions to @total-typescript/shoehorn. Use when user mentions shoehorn, wants to replace `as` in tests, or needs partial test data. |
+| matt/pr | Use when writing a PR body. |
 | matt/prototype | Build a throwaway prototype to answer a design question. Use when the user wants to sanity-check whether a state model or logic feels right, or explore what a UI should look like. |
 | matt/research | Investigate a question against high-trust primary sources and capture the findings as a Markdown file in the repo. Use when the user wants a topic researched, docs or API facts gathered, or reading legwork delegated to a background agent. |
-| matt/resolving-merge-conflicts | Use when you need to resolve an in-progress git merge/rebase conflict. |
+| matt/retro | Conduct a retrospective on a coding session. |
 | matt/scaffold-exercises | Create exercise directory structures with sections, problems, solutions, and explainers that pass linting. Use when user wants to scaffold exercises, create exercise stubs, or set up a new course section. |
-| matt/setup-matt-pocock-skills | Configure this repo for the engineering skills — set up its issue tracker, triage label vocabulary, and domain doc layout. Run once before first use of the other engineering skills. |
+| matt/setup-matt-pocock-skills | Configure this repo for the engineering skills: set up its issue tracker, triage label vocabulary, and domain doc layout. Run once before first use of the other engineering skills. |
 | matt/setup-pre-commit | Set up Husky pre-commit hooks with lint-staged (Prettier), type checking, and tests in the current repo. Use when user wants to add pre-commit hooks, set up Husky, configure lint-staged, or add commit-time formatting/typechecking/testing. |
-| matt/setup-ts-deep-modules | Wire dependency-cruiser into a TypeScript repo so each package is a deep module — implementation hidden in subfolders, reachable only through its entry-point files. User-invoked. |
+| matt/setup-ts-deep-modules | Wire dependency-cruiser into a TypeScript repo so each package is a deep module, with implementation hidden in subfolders and reachable only through its entry-point files. User-invoked. |
+| matt/software-factory | Shared language for designing a software factory: the tasks it runs and the services it plugs into. |
 | matt/tdd | Test-driven development. Use when the user wants to build features or fix bugs test-first, mentions "red-green-refactor", or wants integration tests. |
 | matt/teach | Teach the user a new skill or concept, within this workspace. |
 | matt/to-questionnaire | Turn a decision you can't fully answer into a questionnaire for someone else to fill in. |
-| matt/to-spec | Turn the current conversation into a spec and publish it to the project issue tracker — no interview, just synthesis of what you've already discussed. |
-| matt/to-tickets | Break a plan, spec, or the current conversation into a set of tracer-bullet tickets, each declaring its blocking edges, published to the configured tracker — edges as text in one file per ticket locally, or native blocking links on a real tracker. |
-| matt/triage | Move issues and external PRs through a state machine of triage roles — categorise, verify, grill if needed, and write agent-ready briefs. |
-| matt/wait-what | Stop. That last message did not land — re-pitch it. |
-| matt/wayfinder | Plan a huge chunk of work — more than one agent session can hold — as a shared map of decision tickets on your issue tracker, and resolve them one at a time until the way to the destination is clear. |
+| matt/to-spec | Turn the current conversation into a spec and publish it to the project issue tracker: no interview, just synthesis of what you've already discussed. |
+| matt/to-tickets | Break a plan, spec, or the current conversation into a set of tracer-bullet tickets, each declaring its blocking edges, published to the configured tracker (edges as text in one file per ticket locally, or native blocking links on a real tracker). |
+| matt/triage | Move issues and external PRs through a state machine of triage roles, categorise, verify, grill if needed, and write agent-ready briefs. |
+| matt/wait-what | Stop. That last message did not land: re-pitch it. |
+| matt/wayfinder | Plan a huge chunk of work (more than one agent session can hold) as a shared map of decision tickets on your issue tracker, and resolve them one at a time until the way to the destination is clear. |
 | matt/wizard | Generate an interactive bash wizard that walks a human through steps only they can perform. Use when provisioning infrastructure, setting up credentials or CI secrets, walking an unfamiliar third-party dashboard, or running a one-off migration or cutover. Don't invoke this for steps the agent can pe |
-| matt/writing-beats | Writing, exploit — assemble raw material into a journey of beats, grounding each term before a beat leans on it. |
+| matt/writing-beats | Writing, exploit; assemble raw material into a journey of beats, grounding each term before a beat leans on it. |
 | matt/writing-for-agents | Writing documents for agents. Use when creating or editing skills, or modifying AGENTS.md or CLAUDE.md. |
-| matt/writing-fragments | Writing, explore — mine raw fragments, no structure yet. |
-| matt/writing-shape | Writing, exploit — shape raw material into an article, paragraph by paragraph. |
+| matt/writing-fragments | Writing, explore: mine raw fragments, no structure yet. |
+| matt/writing-shape | Writing, exploit: shape raw material into an article, paragraph by paragraph. |
 | multi-search-engine | Multi search engine integration with 17 engines (8 CN + 9 Global). Supports advanced search operators, time filters, site search, privacy engines, and WolframAlpha knowledge queries. No API keys required. |
 | n8n-workflow-automation | Designs and outputs n8n workflow JSON with robust triggers, idempotency, error handling, logging, retries, and human-in-the-loop review queues. Use when you need an auditable automation that won’t silently fail. |
 | nano-banana-pro | AI图像生成与编辑工具，基于Gemini 3 Pro Image。支持文本生成图像、图像编辑、多分辨率输出（1K/2K/4K）。 |

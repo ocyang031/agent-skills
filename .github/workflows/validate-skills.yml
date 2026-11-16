@@ -33,7 +33,7 @@ jobs:
       - name: 校验精选技能单向部署
         run: |
           skills_root="$(mktemp -d)"
-          scripts/deploy-curated-skill.sh install obsidian "$skills_root"
-          scripts/deploy-curated-skill.sh check obsidian "$skills_root"
+          bash scripts/deploy-curated-skill.sh install obsidian "$skills_root"
+          bash scripts/deploy-curated-skill.sh check obsidian "$skills_root"
           printf '\n# drift\n' >> "$skills_root/obsidian/SKILL.md"
-          ! scripts/deploy-curated-skill.sh check obsidian "$skills_root"
+          ! bash scripts/deploy-curated-skill.sh check obsidian "$skills_root"

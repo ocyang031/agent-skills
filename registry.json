@@ -1,7 +1,7 @@
 {
   "version": 1,
   "description": "agent-skills 技能注册表 — 机器可读索引",
-  "updated": "2026-11-04T02:11:19Z",
+  "updated": "2026-11-16T10:17:13Z",
   "skills": [
     {
       "name": "bit-secret-manager",
@@ -20,6 +20,12 @@
       "namespace": "curated",
       "description": "使用 notesmd-cli 管理 Obsidian Vault 中的笔记、内容搜索、创建、移动和删除。处理 Vault 文件或需要保持 Wiki 链接时使用。",
       "path": "curated/obsidian/"
+    },
+    {
+      "name": "oc-ledger-deploy",
+      "namespace": "curated",
+      "description": "部署 Oc-Ledger 个人工作区收口目录首次落地，从零创建骨架或核对补齐已有骨架，阶段幂等，可扩展新工具、新规则与新资产类型。",
+      "path": "curated/oc-ledger-deploy/"
     },
     {
       "name": "out-setup",

@@ -25,7 +25,7 @@ git clone https://github.com/arykai031/agent-skills.git
 cat SKILLS.md
 
 # 3. 安装某个自研技能
-./scripts/deploy-curated-skill.sh install <skill-name> <workspace>/skills
+bash scripts/deploy-curated-skill.sh install <skill-name> <workspace>/skills
 ```
 
 ## 本地质量检查
@@ -57,5 +57,5 @@ bash scripts/build-registry.sh
 全局目录中的同名目录都是部署副本，不接受手工修改。检查副本是否漂移：
 
 ```bash
-./scripts/deploy-curated-skill.sh check <skill-name> <workspace>/skills
+bash scripts/deploy-curated-skill.sh check <skill-name> <workspace>/skills
 ```

@@ -51,6 +51,6 @@ description: <触发条件描述 — 告诉 agent 什么时候该用这个技能
 ## 提交流程
 
 1. 在 `curated/` 下创建技能目录和 `SKILL.md`
-2. 运行 `./scripts/validate-skill.sh curated/<skill-name>` 校验格式
-3. 运行 `./scripts/build-registry.sh` 更新 registry
+2. 运行 `bash scripts/validate-skill.sh curated/<skill-name>` 校验格式
+3. 运行 `bash scripts/build-registry.sh` 更新 registry
 4. 提交 PR

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "description": "agent-skills 技能注册表 — 机器可读索引",
-  "updated": "2026-11-19T09:36:35Z",
+  "updated": "2026-11-19T09:37:18Z",
   "skills": [
     {
       "name": "bit-secret-manager",

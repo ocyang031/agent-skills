@@ -27,6 +27,7 @@
 | anysearch | Real-time search engine supporting web search, vertical domain search, parallel batch search, and URL content extraction. |
 | github | GitHub API integration with managed OAuth. Access repositories, issues, pull requests, commits, branches, and users. Use this skill when users want to interact with GitHub repositories, manage issues and PRs, search code, or automate workflows. For other third party apps, use the api-gateway skill ( |
 | ima-skill | 统一的 IMA OpenAPI 技能，支持笔记管理和知识库操作。 当用户提到知识库、资料库、笔记、备忘录、记事，或者想要上传文件、添加网页到知识库、 搜索知识库内容、搜索/浏览/创建/编辑笔记时，使用此 skill。 即使用户没有明确说"知识库"或"笔记"，只要意图涉及文件上传到知识库、网页收藏、 知识搜索、个人文档存取（如"帮我记一下"、"搜一下知识库里有没有XX"），也应触发此 skill。 |
+| implement-ponytail | Use when implementing a ticket or feature with Matt-style implement flow. Enforces Ponytail lazy-senior minimalism: smallest complete change, YAGNI, no unrequested abstractions. Prefer this over plain implement when the user wants less code or mentions ponytail / 极简 / yagni. |
 | matt/ask-matt | Ask which skill or flow fits your situation. A router over the skills in this repo. |
 | matt/chief-of-staff | Pursue a long-running goal in a single session by co-ordinating subagents. |
 | matt/claude-handoff | Hand the current conversation off to a fresh background agent that picks up the work immediately. |

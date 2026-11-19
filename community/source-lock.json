@@ -561,6 +561,23 @@
         }
       }
     },
+    "implement-ponytail": {
+      "source": "conversation-composed",
+      "installed_at": "2026-11-19",
+      "path": "community/implement-ponytail",
+      "upstreams": [
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "upstream_path": "skills/engineering/implement",
+          "version": "1.3.2"
+        },
+        {
+          "repository": "https://github.com/DietrichGebert/ponytail",
+          "ruleset": "laziness ladder (inlined, not a runtime dependency)"
+        }
+      ],
+      "note": "Locally composed hybrid: Matt's implement flow under strict Ponytail minimalism rules, both rule sets inlined so no plugin dependency is required. User-supplied markdown preserved verbatim except the description is quoted (contains colon-space) per repo YAML convention, and the trailing chat-only install notes are not part of the skill body."
+    },
     "@user_51511428/anysearch": {
       "source": "skillhub",
       "version": "2.1.0",

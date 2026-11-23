@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """从 SKILL.md 自动构建 registry.json"""
 
-import json, os
+import json, os, sys
 from datetime import datetime, timezone
 from skill_metadata import read_skill, skill_entrypoints
 
@@ -31,7 +31,7 @@ def write_skills_index(skills):
             label = relative_path if '/' in relative_path else skill['name']
             lines.append(f"| {label} | {description or '—'} |")
         lines.append('')
-    with open('SKILLS.md', 'w') as f:
+    with open('SKILLS.md', 'w', encoding='utf-8', newline='') as f:
         f.write('\n'.join(lines))
 
 def main():
@@ -49,12 +49,15 @@ def main():
         'skills': skills
     }
 
-    with open('registry.json', 'w') as f:
+    with open('registry.json', 'w', encoding='utf-8', newline='') as f:
         json.dump(registry, f, ensure_ascii=False, indent=2)
 
     write_skills_index(skills)
 
-    print(f'✅ registry.json and SKILLS.md updated — {len(skills)} skills')
+    # Reconfigure stdout: the default Windows console code page (e.g. GBK)
+    # cannot encode the non-ASCII separators used below.
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+    print(f'registry.json and SKILLS.md updated - {len(skills)} skills')
     for s in skills:
         print(f'  {s["namespace"]:>10}/{s["name"]:<30} {s["description"][:50]}')
 

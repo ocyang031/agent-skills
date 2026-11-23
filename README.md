@@ -10,10 +10,13 @@
 agent-skills/
 ├── curated/        🏆 自研/精选技能（你亲手写的）
 ├── community/      📦 社区技能本地快照（按来源分组；`matt/` 来自 mattpocock/skills）
+├── pending/        🧪 待使用、待转正的技能快照
 ├── templates/      📋 技能开发模板
 ├── scripts/        🔧 管理工具
 └── docs/           📖 文档
 ```
+
+待试用的候选放在 [`pending/`](pending/README.md)，通过实际验证并确认归属后，再纳入正式技能索引。
 
 ## 快速开始
 

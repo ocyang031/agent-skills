@@ -1,0 +1,4 @@
+interface:
+  display_name: "韩叙 · 短视频口播文风助手"
+  short_description: "整合论点、论证、结构与口吻，有语料就学习，没有就通过对话和改稿校准。"
+  default_prompt: "使用 $hanxu-script-agent，根据我的题目与材料理清论点、论证和结构，写完整口播稿；有本人语料就学习，没有则通过对话和改稿逐步校准。"

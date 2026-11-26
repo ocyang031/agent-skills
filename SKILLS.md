@@ -9,7 +9,7 @@
 | bit-secret-manager | DISABLED as of 2026-08-31. Do not use for API keys, Tokens, credentials, credential configuration, .env requests, tool authentication, or Bitwarden Secrets Manager access. Never accept secret values in chat. |
 | drawio-skill | Use when the user requests diagrams, flowcharts, architecture diagrams, ER diagrams, UML / sequence / class diagrams, SysML / MBSE diagrams (block definition, internal block, requirement, parametric), BPMN business process diagrams, swimlane / cross-functional flowcharts, network topology, cloud arc |
 | obsidian | 使用 notesmd-cli 管理 Obsidian Vault 中的笔记、内容搜索、创建、移动和删除。处理 Vault 文件或需要保持 Wiki 链接时使用。 |
-| oc-ledger-deploy | 部署 Oc-Ledger 个人工作区收口目录首次落地，从零创建骨架或核对补齐已有骨架，阶段幂等，可扩展新工具、新规则与新资产类型。 |
+| oc-ledger-deploy | 部署 010_oc-ledger 个人工作区收口目录首次落地，从零创建骨架或核对补齐已有骨架，阶段幂等，可扩展新工具、新规则与新资产类型。 |
 | out-setup | 建立可复用的收口目录骨架（0out）——交付物唯一出口。含 AGENTS.md 行为规范（回写策略/索引格式/命名规范/禁止事项）、INDEX.md 双链索引、目录用途划分。当用户提到"收口目录""交付物目录""outputs 重构""目录骨架""目录管理方案"时使用。 |
 | test-case-generator | 基于需求文档（PRD/Spec）或功能描述，自动生成面向功能测试的结构化测试用例（Markdown格式）。 当用户提到以下任何意图时，务必使用本技能，即使没有明确说出"测试用例"字样： - "为这个功能生成测试用例" / "帮我写一份测试用例" - "生成测试清单" / "帮我做一下测试分析" - PRD/Spec 完成后需要落地验收标准 - 准备功能测试前需要系统化测试方案 - 提到了具体的功能模块，询问"怎么测" / "有什么测试点" - 提供了接口文档或流程图，要求生成用例 本技能与 test-prd-splitter、tester-pipeline 配合使用效果最佳。 |
 | test-case-md-to-excel | 将 Markdown 格式的测试用例批量转换为格式化的 Excel 文件。 优先解析 test-case-generator 生成的 Obsidian 三段式待办，同时兼容旧版 [Px] 四段式。 支持批量扫描目录下所有测试用例文件，自动按模块拼音首字母生成编号（TC-模块缩写-序号）， 输出包含 9 列（用例编号、所属模块、功能点、优先级、用例标题、前置条件、操作步骤、预期结果、执行结果）的带样式 Excel 文件。 当用户需要将 Markdown 测试用例转换为 Excel、批量生成测试用例编号、或处理标准格式的测试用例文件时，应触发此技能。 |

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "description": "agent-skills 技能注册表 — 机器可读索引",
-  "updated": "2026-11-23T07:56:40Z",
+  "updated": "2026-11-26T09:31:09Z",
   "skills": [
     {
       "name": "bit-secret-manager",
@@ -24,7 +24,7 @@
     {
       "name": "oc-ledger-deploy",
       "namespace": "curated",
-      "description": "部署 Oc-Ledger 个人工作区收口目录首次落地，从零创建骨架或核对补齐已有骨架，阶段幂等，可扩展新工具、新规则与新资产类型。",
+      "description": "部署 010_oc-ledger 个人工作区收口目录首次落地，从零创建骨架或核对补齐已有骨架，阶段幂等，可扩展新工具、新规则与新资产类型。",
       "path": "curated/oc-ledger-deploy/"
     },
     {

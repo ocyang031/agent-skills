@@ -3,7 +3,7 @@
 ## 目录树
 
 ```text
-Oc-Ledger/
+010_oc-ledger/
 ├─ .agents/
 │  ├─ adapters/          # 每个 agent 工具一份接入约定
 │  ├─ config/            # 工具与机器的复用配置
@@ -49,7 +49,7 @@ Oc-Ledger/
 | `DESIGN.md` | 三层边界、文件流转、存储与维护原则。 |
 | `README.md` | 面向人的入口，登记本机路径映射。 |
 | `.agents/adapters/` | 每个 agent 工具一份接入约定与验收项。 |
-| `.agents/drafts/` | 沉淀候选草稿箱：agent 自动写，用户分拣；分拣前不构成权威，版本控制忽略，可由流水重新生成。 |
+| `.agents/drafts/` | 沉淀候选草稿箱：agent 自动写，用户分拣；分拣前不构成权威，版本控制忽略，可由流水重新生成。被否决的草稿移入 `.agents/drafts/rejected/` 保留，不删除。 |
 | `.agents/memory/` | 短期流水，按 `<工具名>/<日期>.md` 分文件，只追加。 |
 | `.agents/rules/` | 按任务路由加载的细则；敏感区限制、删除确认、授权要求不在此列，必须常驻在 `AGENTS.md`。 |
 | `.agents/scripts/` | 辅助脚本，不内嵌秘密值。 |
@@ -180,7 +180,7 @@ mkdir -p "$ROOT/.agents/adapters" "$ROOT/.agents/config" "$ROOT/.agents/drafts" 
 `README.md`（登记本机主路径）：
 
 ```markdown
-# Oc-Ledger
+# 010_oc-ledger
 
 个人数字工作区：规则跟人走，骨架只创建一次。
 
@@ -293,7 +293,7 @@ mkdir -p "$ROOT/.agents/adapters" "$ROOT/.agents/config" "$ROOT/.agents/drafts" 
 
 ```python
 #!/usr/bin/env python3
-"""Oc-Ledger §4 收编抽取脚本.
+"""010_oc-ledger §4 收编抽取脚本.
 
 按《收口目录部署方案》§4 与 oc_ledger_deploy skill references/adopt.md 执行：
 - 只读抽取，不移动任何原物；结果落到 000_Inbox/imported/<工具名>/<日期>/。
@@ -312,7 +312,7 @@ mkdir -p "$ROOT/.agents/adapters" "$ROOT/.agents/config" "$ROOT/.agents/drafts" 
 - 三方工具 plans/：无缺省根，须由用户指定 THIRD_PARTY_PLANS_ROOT，否则该来源停用并明示。
 
 用法：
-    python3 extract.py [--root ~/workspace/Oc-Ledger] [--dry-run|--execute]
+    python3 extract.py [--root ~/workspace/010_oc-ledger] [--dry-run|--execute]
 缺省为 --dry-run，只列清单、不写任何文件。--execute 才复制并写 MANIFEST.md。
 """
 import argparse
@@ -378,9 +378,9 @@ def sha256_of(path: Path) -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Oc-Ledger §4 抽取脚本")
-    parser.add_argument("--root", default="~/workspace/Oc-Ledger",
-                        help="Oc-Ledger 根目录")
+    parser = argparse.ArgumentParser(description="010_oc-ledger §4 抽取脚本")
+    parser.add_argument("--root", default="~/workspace/010_oc-ledger",
+                        help="010_oc-ledger 根目录")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--dry-run", action="store_true", default=True)
     mode.add_argument("--execute", action="store_true")

@@ -1,5 +1,5 @@
 name: "oc_ledger_deploy"
-title: "Oc-Ledger Workspace Deployment"
-description: "Deploy the Oc-Ledger personal workspace on first landing from scratch, or verify and complete an existing skeleton, with idempotent phases and extension points for new tools, rules and asset types."
+title: "010_oc-ledger Workspace Deployment"
+description: "Deploy the 010_oc-ledger personal workspace on first landing from scratch, or verify and complete an existing skeleton, with idempotent phases and extension points for new tools, rules and asset types."
 category: "Work and knowledge"
 include_in_prompt: false

@@ -77,6 +77,30 @@
 - `100_Works/` 下面的项目目录不编号，用归属前缀加项目名。
 - `000_Inbox/` 下面保持 `010_Downloads/`（编号）与 `imported/`（不编号）并存，不对称是有意的：编号标记可清空暂存，不编号标记保留证据。不要给 `imported/` 加编号，那会暗示它也可清空。
 
+## 资产清单
+
+`200_Digital_assets/` 的完整性清单：登记该区资产文件的 SHA-256，唯一用途是核验资产没丢、没坏、没被改；不是资产目录（不记标题、作者等元数据），不是备份。
+
+- 文件名与位置：`200_Digital_assets/MANIFEST.sha256`，进根仓库版本控制。
+- 格式：标准 sha256sum 格式，一行一个文件：`<sha256>␣␣<相对路径>`（哈希与路径之间两个空格）；路径相对 `200_Digital_assets/`、按路径排序；不写注释行、不写生成时间（生成时间看 git 记录），保证 `sha256sum -c` 干净通过。
+- 覆盖范围：210 之外各类（`220_Docs/`、`230_Picture/`、`240_E-book/`、`250_Videos/` 及 260 起新增类别）及其子目录下的全部普通文件；清单文件自身除外。
+- 敏感区单独成册：`210_Personal-record/MANIFEST.sha256`，同格式同规则，位于整目录被忽略的敏感区内，不进版本控制，只在本机核验；根清单不得出现 210 下任何路径。
+- 生成命令：在 `200_Digital_assets/` 内执行，整表重建，不手改、不增量编辑：
+
+```bash
+find . -type f ! -name 'MANIFEST.sha256' ! -path './210_Personal-record/*' -print0 | LC_ALL=C sort -z | xargs -0 sha256sum > MANIFEST.sha256
+```
+
+  210 册在其目录内执行：
+
+```bash
+find . -type f ! -name 'MANIFEST.sha256' -print0 | LC_ALL=C sort -z | xargs -0 sha256sum > MANIFEST.sha256
+```
+
+- 更新时机：覆盖范围内任何新增、删除、改名、改内容之后，重跑生成命令整表重建。
+- 核验：在 `200_Digital_assets/` 内执行 `sha256sum -c MANIFEST.sha256`，退出 0 且无 FAILED 即一致；210 册在其目录内同法核验。触发条件：覆盖范围内普通文件数 > 0 时清单必须存在且核验通过；范围内为空（只有 `.gitkeep`）时清单可缺席。
+- 边界：资产清单只管 200 区；产物索引归 `.artifacts/index.json`，两套不混。
+
 ## 建目录
 
 ```bash

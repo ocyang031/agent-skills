@@ -4,7 +4,7 @@
 
 1. 新 agent 不需要人工讲解，能答出：方案位置、最近记录、写入路径。
 2. 一次试写入落在正确目录：在 `100_Works/` 下建一个试项目目录并写入试文件，核对落点无误后删除该试目录；流水写入不做试写，以部署收尾产生的真实首条流水为验证凭据，不写试流水、不删除任何流水（流水永留，见 templates.md 的 memory-system 模板保留节）。
-3. 自检全绿：目录结构与 templates.md 一致；根 `README.md` 路径映射正确；记忆落点正确（`MEMORY.md` 格式四字段、流水按工具分文件、账本当前任务唯一）；资产清单哈希一致（如有）；敏感区与草稿箱内容已忽略（`git status` 不出现 `210_Personal-record/` 内容与 `.agents/drafts/` 下的草稿内容，`.agents/drafts/.gitkeep` 占位除外）；`MEMORY.md` 无重复结论；抽取脚本 `.agents/scripts/extract.py` 在位且 `--dry-run` 退出 0；空目录骨架完整：`git ls-files` 含全部应占位空目录的 `.gitkeep`（清单见 templates.md「建目录」一节）。
+3. 自检全绿：目录结构与 templates.md 一致；根 `README.md` 路径映射正确；记忆落点正确（`MEMORY.md` 格式四字段、流水按工具分文件、账本当前任务唯一）；资产清单核验通过（200_Digital_assets/MANIFEST.sha256 以 sha256sum -c 核验，覆盖范围内为空时可缺席；210 册在其目录内同法核验）；敏感区与草稿箱内容已忽略（`git status` 不出现 `210_Personal-record/` 内容与 `.agents/drafts/` 下的草稿内容，`.agents/drafts/.gitkeep` 占位除外）；`MEMORY.md` 无重复结论；抽取脚本 `.agents/scripts/extract.py` 在位且 `--dry-run` 退出 0；空目录骨架完整：`git ls-files` 含全部应占位空目录的 `.gitkeep`（清单见 templates.md「建目录」一节）。
 
 自检命令示例：
 

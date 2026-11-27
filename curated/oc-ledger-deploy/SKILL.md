@@ -89,7 +89,7 @@ description: 部署 010_oc-ledger 个人工作区收口目录首次落地，从�
 
 - 已存在的文件不覆盖，只补齐缺失的部分。
 
-- 同时写 `.agents/rules/decision-records.md` 与 `.agents/rules/rule-design.md` 两份首批规则模块（模板见 references/templates.md），AGENTS.md 任务路由中的对应行随模板一起写入。
+- 同时写 `.agents/rules/decision-records.md`、`.agents/rules/rule-design.md` 与 `.agents/rules/memory-system.md` 三份首批规则模块（模板见 references/templates.md），AGENTS.md 任务路由中的对应行随模板一起写入。
 
 - 同时写 `.agents/scripts/extract.py` 抽取脚本（模板见 references/templates.md），供阶段 6 调用。
 
@@ -143,12 +143,6 @@ description: 部署 010_oc-ledger 个人工作区收口目录首次落地，从�
 
 - 知识库规则文件的自我定位修改必须等根规则文件到位后一并执行，上级文件不存在时不得提前修改，否则会制造悬空引用。
 
-## Available connectors
-
-- Use `muse.connector_search` to find other connectors and `muse.skill_search` to find related skills.
-
-- If nothing here fits, look on the web for a maintained API or MCP server and set it up with [Custom Connectors and MCPs](/opt/muse/skills/custom-connector-setup/SKILL.md), or build a custom connector.
-
 ## 变更记录
 
 - 1.0.0，2026-11-16，从收口目录部署方案首次落地版提炼，含三性契约与决定记录落点调整。已验证，两次落地执行产出相同的已跟踪文件集。
@@ -156,3 +150,9 @@ description: 部署 010_oc-ledger 个人工作区收口目录首次落地，从�
 - 1.2.0，2026-11-16，契约设计范式下沉为 rule-design.md 规则模块，随骨架部署（模板见 templates.md），与方案回填一致；decision-records 模块泛化为载体中立写法（不点名宿主产物），并按 rule-design 五步修正（定界闭口、格式机械化、补保活）。
 - 1.3.0，2026-11-17，§4 抽取脚本随骨架部署（模板见 templates.md），adopt.md 与验收同步；与方案回填一致。
 - 1.4.0，2026-11-26，草稿审核口径回填：被否决草稿改为移入 `.agents/drafts/rejected/` 保留、不删除（operating-rules.md 三处、templates.md 草稿箱说明同步），与方案回填一致；工作区 `.agents/rules/draft-review.md` 模块同日落地（ADR-0010）。
+- 1.5.0，2026-11-27，记忆系统完善：蒸馏回路挂靠每周复核、旧上下文须搜 `.agents/memory/` 全目录、冲突语义（事实新者胜、裁决以 ADR 为准）与 `MEMORY.md` 取代标注、流水永留（ADR-0011）；memory-system.md 成为第三份首批规则模块（templates.md 全文收录），operating-rules.md 记忆与账本一节同步，与方案回填一致。
+- 1.6.0，2026-11-27，记忆纠错机制：纠错与取代、冲突并列为第三种失效情形，四步为冻结、核源定性（独立证据、自证禁止）、不改史只加「[已纠错：见 YYYY-MM-DD 条目]」标注、传播追溯查完才算纠完，触发分用户纠正即时与 agent 发现先冻结报复核两级（ADR-0012）；templates.md 的 memory-system 模板全文同步，operating-rules.md 记忆与账本一节补纠错段，与方案回填一致。
+- 1.7.0，2026-11-27，记忆健壮性：规模触发线（不建索引裁决预设失效线——流水文件 ≥ 300、总字数 ≥ 200 万字、单次 grep 命中 > 50 条难筛选，任一触发先报告经确认再建年度卷册摘要、改先查卷册后定点 grep）与清除例外（纠错的例外格，范围卡死秘密/他人隐私/用户要求遗忘三类，真删除加墓碑加传播追溯，秘密类可先行清除事后报告，已进 git 历史单独告知、不自动改写历史）（ADR-0013）；templates.md 的 memory-system 模板全文同步，operating-rules.md 记忆与账本一节补规模触发线与清除例外两段，与方案回填一致。
+- 1.8.0，2026-11-27，记忆系统边界：分域自含（只管工作区记忆、工作区文件为唯一权威，不引用外部系统路径、不假设其存在、不以其为裁决依据）、出境摘要自含（出境只带一句话摘要加来源指针，指针不可达时摘要仍可独立理解与使用）、普适标记（普适候选分拣加标记仍留工作区、不推送不指定目的地）、正文单源（不做跨系统正文镜像），跨系统冲突 fail-closed 报用户裁决（ADR-0014）；templates.md 的 memory-system 模板全文同步，operating-rules.md 记忆与账本一节补系统边界段，与方案回填一致。
+- 1.10.0，2026-11-27，适配层绑定补全：根 AGENTS.md 任务路由加 adapter 绑定行（进入工作区按当前工具读 `.agents/adapters/<工具名>.md` 完成宿主绑定，无 adapter 时泛称目的地按未绑定处理），templates.md 根文件模板同步；现有 muse adapter 补全人格文件与工具坑文件绑定（ADR-0016）。
+- 1.9.0，2026-11-27，普适性审计修复：部署方案根目录名回填为现行名 `010_oc-ledger`（ADR-0009 落地欠账，含 extract 模板缺省根改 $ROOT 参数口径、缺省根改由脚本位置推导）；根 AGENTS.md 模板回填草稿审核路由与纠错、清除与规模、系统边界三条记忆指针，templates.md 同步一致；memory-system 定界补前置条件声明（蒸馏、抽查与规模核查挂靠周期复核进程，无此进程不自动运行），templates.md 模板全文同步，operating-rules.md 与方案 §7 蒸馏段同步；删除本 skill 与 self-improvement、hands_on_pc_troubleshooting 三份 SKILL.md 的平台注入尾巴（Available connectors 段）（ADR-0015），与方案回填一致。

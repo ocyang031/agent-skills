@@ -91,7 +91,7 @@ description: 部署 010_oc-ledger 个人工作区收口目录首次落地，从�
 
 - 已存在的文件不覆盖，只补齐缺失的部分。
 
-- 同时写 `.agents/rules/decision-records.md`、`.agents/rules/rule-design.md`、`.agents/rules/memory-system.md` 与 `.agents/rules/draft-review.md` 四份首批规则模块（模板见 references/templates.md），AGENTS.md 任务路由中的对应行随模板一起写入。
+- 同时写 `.agents/rules/decision-records.md`、`.agents/rules/rule-design.md`、`.agents/rules/memory-system.md`、`.agents/rules/draft-review.md` 与 `.agents/rules/multi-machine.md` 五份首批规则模块（模板见 references/templates.md），AGENTS.md 任务路由中的对应行随模板一起写入。
 
 - 同时写 `.agents/scripts/extract.py` 抽取脚本（模板见 references/templates.md），供阶段 6 调用。
 
@@ -135,6 +135,8 @@ description: 部署 010_oc-ledger 个人工作区收口目录首次落地，从�
 
 - 收口目录投入使用后的日常规则在 references/operating-rules.md 中，包括闭环、产物归口、记忆与账本、保留与清理、代码规则、规则层级与禁止清单。
 
+- 多机共享同一实例时遵守工作区 `.agents/rules/multi-machine.md`（正本随仓库走；references/operating-rules.md「多机共享」一节只留指针）。
+
 - 部署本 skill 的 agent 在后续会话中继续以本 skill 为规则来源，不另查文档。
 
 - 规则冲突无法并存时停机报人，冲突项写入账本的堵塞段，人裁定后把结论按 ADR 方案记入部署好的工作区内的 `900_ADR/`，agent 读到更新才继续该项写入，裁定前该条保持停止，其余工作不受影响。
@@ -159,3 +161,9 @@ description: 部署 010_oc-ledger 个人工作区收口目录首次落地，从�
 - 1.11.0，2026-11-27，回执驱动修复：draft-review 模板补全（工作区现行模块全文收录进 templates.md，首批规则模块变四份）；acceptance 口径统一（试写入只落 `100_Works/` 试目录、流水以真实首条验证不试写不删，自检命令加 `--no-index`、find 只排 `.git/` 本身）；空目录骨架（部署空目录一律 `.gitkeep` 占位，被忽略目录在 `.gitignore` 开否定例外只放行占位，验收加 `git ls-files` 核验）；阶段 5 降级（bootstrap/curator/doctor 先查事实源，无则跳过并在适配文件记录、手动兜底）；部署建 `.agents/learnings/` 空目录；变更记录恢复单调递增、`.gitignore` 模板加 `__pycache__/`、HANDOFF 工具字段与 README 机器名口径补注（ADR-0017），与方案回填一致。
 - 1.11.1，2026-11-27，补全回执驱动的措辞同步：acceptance.md 与方案 §11 自检第 3 条「git status 不出现 .agents/drafts/」与 1.11.0 的 .gitkeep 否定例外冲突，改为「不出现草稿内容（.gitkeep 占位除外）」；dsh 补全回执指出，源头核实属实。
 - 1.12.0，2026-11-27，资产清单定义落地（ADR-0018）：MANIFEST.sha256 格式/位置/覆盖范围/生成与核验口径定义，210 单独成册；验收第 3 条「如有」改为确切触发条件。
+- 1.13.0，2026-11-27，多机共享纪律（ADR-0019）：同一工作区仓库多机多工具共享同一实例的拉取/推送/HANDOFF 协调/流水分写/路径表加行/adapter 本机性口径。
+- 1.14.0，2026-11-27，新机接入定式（ADR-0020）：加入已有实例不走部署流程——克隆、写 adapter、路径表加行、技能按需另装、周期自动化不随仓库走、往返验证即完成。
+- 1.15.0，2026-11-27，新机接入四缺口全修（ADR-0021）：multi-machine 规则模块入仓库为正本（技能与方案改指针、模板补入）、修 .agents/AGENTS.md 接入路由、定式补 git 身份与凭据步、周期任务单点执行、接入引导语模板。
+- 1.16.0，2026-11-27，接入入口改自含手册（ADR-0022）：新机接入手册模板取代接入引导语模板块，手册自含坐标与全流程、克隆后以仓库规则为准。
+- 1.17.0，2026-11-27，接入手册入仓库根（ADR-0023）：根 ONBOARDING.md 为接入唯一入口，接入流程简化为拉仓库后读手册；模板块为其生成源，结构清单与路由同步。
+- 1.17.1，2026-11-27，手册 HANDOFF 口径消歧：ONBOARDING.md 第 3 节与第 7 节在 HANDOFF 被他机占用时存在冲突（第 7 节无条件覆盖首行会抹掉第 3 节保护的占用登记），改为分情况处理——空闲或本方任务才更新首行，被占用时不覆盖、只记流水与回执。

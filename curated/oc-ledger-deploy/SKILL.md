@@ -79,6 +79,8 @@ description: 部署 010_oc-ledger 个人工作区收口目录首次落地，从�
 
 - 按 references/templates.md 中的目录树与编号规则建目录，050_Knowledge 下的 Obsidian 目录只建空目录，不搬入知识库。
 
+- 部署产生的每个空目录放一个 `.gitkeep` 占位（含被根仓库忽略的运行时目录，其 `.gitkeep` 在 `.gitignore` 里开否定例外；敏感区 `210_Personal-record/` 除外，整体不进版本控制），使骨架可经 git 克隆完整复现，清单与口径见 references/templates.md「建目录」一节。
+
 - 建完后用 find 列出结构并与目录树逐项核对。
 
 ### 阶段 2 写根文件
@@ -89,7 +91,7 @@ description: 部署 010_oc-ledger 个人工作区收口目录首次落地，从�
 
 - 已存在的文件不覆盖，只补齐缺失的部分。
 
-- 同时写 `.agents/rules/decision-records.md`、`.agents/rules/rule-design.md` 与 `.agents/rules/memory-system.md` 三份首批规则模块（模板见 references/templates.md），AGENTS.md 任务路由中的对应行随模板一起写入。
+- 同时写 `.agents/rules/decision-records.md`、`.agents/rules/rule-design.md`、`.agents/rules/memory-system.md` 与 `.agents/rules/draft-review.md` 四份首批规则模块（模板见 references/templates.md），AGENTS.md 任务路由中的对应行随模板一起写入。
 
 - 同时写 `.agents/scripts/extract.py` 抽取脚本（模板见 references/templates.md），供阶段 6 调用。
 
@@ -99,7 +101,7 @@ description: 部署 010_oc-ledger 个人工作区收口目录首次落地，从�
 
 - 产物索引是忽略例外，提交前强制加入一次，之后作为已跟踪文件正常提交。
 
-- 提交前检查 git status，确认被忽略的目录不在待提交列表里，唯一的例外是强制加入的产物索引。
+- 提交前检查 git status，确认被忽略的目录不在待提交列表里，例外只有两类：强制加入的产物索引，以及各空目录的 `.gitkeep` 占位（被忽略目录的 `.gitkeep` 经 `.gitignore` 否定例外放行，应出现在待提交列表里）。
 
 - 用户明确不要根仓库时跳过本阶段，资产清单与产物索引暂行放在各项目目录内，不停下整个部署。
 
@@ -109,11 +111,9 @@ description: 部署 010_oc-ledger 个人工作区收口目录首次落地，从�
 
 ### 阶段 5 部署 skill
 
-- 部署 bootstrap、curator、doctor 三个 skill，部署命令与仓库地址记入对应适配文件。
+- 先查 skill 事实源仓库是否有 bootstrap、curator、doctor 三个 skill：有则部署，部署命令与仓库地址记入对应适配文件；部署后做一次性比对，列出本机独有或版本不同的 skill 交人决定是否回收，比对不属于自检常驻校验。
 
-- 部署后做一次性比对，列出本机独有或版本不同的 skill 交人决定是否回收，比对不属于自检常驻校验。
-
-- 三个 skill 不可用时以手动步骤替代，部署不因此停下。
+- 事实源仓库无此三者（或问不到来源）时跳过本阶段：在对应适配文件中记录事实源仓库地址、查询日期、缺失名单，并注明以手动步骤兜底（日常规则的手动步骤即替代做法）；部署继续，不因此停下，不复制设备上已装的 skill 副本冒充部署。
 
 ### 阶段 6 收编已有资料
 
@@ -154,5 +154,6 @@ description: 部署 010_oc-ledger 个人工作区收口目录首次落地，从�
 - 1.6.0，2026-11-27，记忆纠错机制：纠错与取代、冲突并列为第三种失效情形，四步为冻结、核源定性（独立证据、自证禁止）、不改史只加「[已纠错：见 YYYY-MM-DD 条目]」标注、传播追溯查完才算纠完，触发分用户纠正即时与 agent 发现先冻结报复核两级（ADR-0012）；templates.md 的 memory-system 模板全文同步，operating-rules.md 记忆与账本一节补纠错段，与方案回填一致。
 - 1.7.0，2026-11-27，记忆健壮性：规模触发线（不建索引裁决预设失效线——流水文件 ≥ 300、总字数 ≥ 200 万字、单次 grep 命中 > 50 条难筛选，任一触发先报告经确认再建年度卷册摘要、改先查卷册后定点 grep）与清除例外（纠错的例外格，范围卡死秘密/他人隐私/用户要求遗忘三类，真删除加墓碑加传播追溯，秘密类可先行清除事后报告，已进 git 历史单独告知、不自动改写历史）（ADR-0013）；templates.md 的 memory-system 模板全文同步，operating-rules.md 记忆与账本一节补规模触发线与清除例外两段，与方案回填一致。
 - 1.8.0，2026-11-27，记忆系统边界：分域自含（只管工作区记忆、工作区文件为唯一权威，不引用外部系统路径、不假设其存在、不以其为裁决依据）、出境摘要自含（出境只带一句话摘要加来源指针，指针不可达时摘要仍可独立理解与使用）、普适标记（普适候选分拣加标记仍留工作区、不推送不指定目的地）、正文单源（不做跨系统正文镜像），跨系统冲突 fail-closed 报用户裁决（ADR-0014）；templates.md 的 memory-system 模板全文同步，operating-rules.md 记忆与账本一节补系统边界段，与方案回填一致。
-- 1.10.0，2026-11-27，适配层绑定补全：根 AGENTS.md 任务路由加 adapter 绑定行（进入工作区按当前工具读 `.agents/adapters/<工具名>.md` 完成宿主绑定，无 adapter 时泛称目的地按未绑定处理），templates.md 根文件模板同步；现有 muse adapter 补全人格文件与工具坑文件绑定（ADR-0016）。
 - 1.9.0，2026-11-27，普适性审计修复：部署方案根目录名回填为现行名 `010_oc-ledger`（ADR-0009 落地欠账，含 extract 模板缺省根改 $ROOT 参数口径、缺省根改由脚本位置推导）；根 AGENTS.md 模板回填草稿审核路由与纠错、清除与规模、系统边界三条记忆指针，templates.md 同步一致；memory-system 定界补前置条件声明（蒸馏、抽查与规模核查挂靠周期复核进程，无此进程不自动运行），templates.md 模板全文同步，operating-rules.md 与方案 §7 蒸馏段同步；删除本 skill 与 self-improvement、hands_on_pc_troubleshooting 三份 SKILL.md 的平台注入尾巴（Available connectors 段）（ADR-0015），与方案回填一致。
+- 1.10.0，2026-11-27，适配层绑定补全：根 AGENTS.md 任务路由加 adapter 绑定行（进入工作区按当前工具读 `.agents/adapters/<工具名>.md` 完成宿主绑定，无 adapter 时泛称目的地按未绑定处理），templates.md 根文件模板同步；现有 muse adapter 补全人格文件与工具坑文件绑定（ADR-0016）。
+- 1.11.0，2026-11-27，回执驱动修复：draft-review 模板补全（工作区现行模块全文收录进 templates.md，首批规则模块变四份）；acceptance 口径统一（试写入只落 `100_Works/` 试目录、流水以真实首条验证不试写不删，自检命令加 `--no-index`、find 只排 `.git/` 本身）；空目录骨架（部署空目录一律 `.gitkeep` 占位，被忽略目录在 `.gitignore` 开否定例外只放行占位，验收加 `git ls-files` 核验）；阶段 5 降级（bootstrap/curator/doctor 先查事实源，无则跳过并在适配文件记录、手动兜底）；部署建 `.agents/learnings/` 空目录；变更记录恢复单调递增、`.gitignore` 模板加 `__pycache__/`、HANDOFF 工具字段与 README 机器名口径补注（ADR-0017），与方案回填一致。

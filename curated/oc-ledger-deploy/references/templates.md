@@ -6,8 +6,9 @@
 010_oc-ledger/
 ├─ .agents/
 │  ├─ adapters/          # 每个 agent 工具一份接入约定
-│  ├─ config/            # 工具与机器的复用配置
+│  ├─ config/            # 工具与机器的复用配置（如各工具接入参数），无内容时可空置
 │  ├─ drafts/            # 待分拣的沉淀候选
+│  ├─ learnings/         # self-improvement 日志落点，部署时只建空目录
 │  ├─ memory/            # 按工具分目录的短期流水
 │  ├─ rules/             # 按任务加载的行为规则
 │  ├─ scripts/           # agent 辅助脚本，不内嵌秘密值
@@ -51,6 +52,7 @@
 | `.agents/adapters/` | 每个 agent 工具一份接入约定与验收项。 |
 | `.agents/drafts/` | 沉淀候选草稿箱：agent 自动写，用户分拣；分拣前不构成权威，版本控制忽略，可由流水重新生成。被否决的草稿移入 `.agents/drafts/rejected/` 保留，不删除。 |
 | `.agents/memory/` | 短期流水，按 `<工具名>/<日期>.md` 分文件，只追加。 |
+| `.agents/learnings/` | self-improvement 日志（LEARNINGS/ERRORS/FEATURE_REQUESTS）落点；部署时只建空目录，日志文件随该技能接入时生成。 |
 | `.agents/rules/` | 按任务路由加载的细则；敏感区限制、删除确认、授权要求不在此列，必须常驻在 `AGENTS.md`。 |
 | `.agents/scripts/` | 辅助脚本，不内嵌秘密值。 |
 | `.agents/skills/` | 由 skill 事实源仓库部署而来，本身不是事实源，版本控制忽略。 |
@@ -78,8 +80,8 @@
 ## 建目录
 
 ```bash
-mkdir -p "$ROOT/.agents/adapters" "$ROOT/.agents/config" "$ROOT/.agents/drafts" "$ROOT/.agents/memory" \
-  "$ROOT/.agents/rules" "$ROOT/.agents/scripts" "$ROOT/.agents/skills" \
+mkdir -p "$ROOT/.agents/adapters" "$ROOT/.agents/config" "$ROOT/.agents/drafts" "$ROOT/.agents/learnings" \
+  "$ROOT/.agents/memory" "$ROOT/.agents/rules" "$ROOT/.agents/scripts" "$ROOT/.agents/skills" \
   "$ROOT/.artifacts" \
   "$ROOT/000_Inbox/010_Downloads" "$ROOT/000_Inbox/imported" \
   "$ROOT/050_Knowledge/Obsidian" \
@@ -91,6 +93,14 @@ mkdir -p "$ROOT/.agents/adapters" "$ROOT/.agents/config" "$ROOT/.agents/drafts" 
 ```
 
 `050_Knowledge/Obsidian/` 只建空目录，不把别处的知识库搬进来。`900_ADR/` 只建空目录，首次裁定时建 0001。
+
+空目录占位（`.gitkeep`）：git 不跟踪空目录，部署产生的空目录每个放一个空文件 `.gitkeep`，使骨架可经 git 克隆完整复现。分两类：
+
+- 未被根仓库忽略的空目录：`.agents/adapters/`、`.agents/config/`、`.agents/learnings/`、`.agents/memory/`、`050_Knowledge/Obsidian/`、`100_Works/_archive/`、`200_Digital_assets/220_Docs/`、`230_Picture/`、`240_E-book/`、`250_Videos/`、`300_Dev/`、`900_ADR/`。
+- 被根仓库忽略的运行时目录：`400_Code/`、`000_Inbox/010_Downloads/`、`000_Inbox/imported/`、`.agents/drafts/`、`.agents/skills/`——其 `.gitkeep` 在 `.gitignore` 里开否定例外放行（见「根仓库配置」一节），目录内容仍整体忽略。
+- 例外：`.artifacts/` 不放（已有纳入版本控制的 `index.json`）；敏感区 `200_Digital_assets/210_Personal-record/` 不放（整体不进版本控制，克隆后由建目录一步补建）。
+
+目录有了真实内容后，`.gitkeep` 可留可删，不强制清理。
 
 ## 根文件模板
 
@@ -167,6 +177,8 @@ mkdir -p "$ROOT/.agents/adapters" "$ROOT/.agents/config" "$ROOT/.agents/drafts" 
 无
 ```
 
+首行「工具」字段记最后写入者（工具名），每次覆盖更新时同步改（细则见 operating-rules.md 记忆与账本一节）。
+
 `CONTEXT.md`：按 glossary.md 誊抄规则写。
 
 `DESIGN.md`（三个空段起步，后续按实际填写，不编造内容）：
@@ -201,7 +213,9 @@ mkdir -p "$ROOT/.agents/adapters" "$ROOT/.agents/config" "$ROOT/.agents/drafts" 
 | <机器名> | <ROOT 的绝对路径> |
 ```
 
-首批规则模块随骨架一起写（目前有三份），后续新增规则只加一个规则模块并接通路由：
+机器名用部署时人给定的逻辑名，可与该机 hostname 不同；登记后不随 hostname 变化而改。
+
+首批规则模块随骨架一起写（目前有四份），后续新增规则只加一个规则模块并接通路由：
 
 `.agents/rules/decision-records.md`（决策记录细则，照抄）：
 
@@ -395,6 +409,56 @@ mkdir -p "$ROOT/.agents/adapters" "$ROOT/.agents/config" "$ROOT/.agents/drafts" 
 - 本模块与实际落点不符时暂停执行，停机报人，等裁决后恢复。
 ```
 
+`.agents/rules/draft-review.md`（草稿审核细则，照抄）：
+
+```markdown
+# 草稿审核
+
+本模块管工作区草稿箱 `.agents/drafts/` 里沉淀候选的起草、审核与晋升。本模块对付的错误：agent 自行批准或否决草稿、把未审候选当权威、否决后删除草稿导致同一候选被重复起草。
+
+## 定界
+
+- 管：`.agents/drafts/` 下候选的起草判据、`review` 状态转换、批准后的晋升分流、否决后的保留。
+- 不管：知识库（Vault，`050_Knowledge/Obsidian/`）内部草稿——Vault 草稿归 Vault 自己的 `.agents/rules/agent-drafts.md`，两套互不覆盖、不跨层查找。
+- 草稿在分拣前不构成权威，agent 不把草稿当作记忆读取。
+
+## 选址
+
+- 草稿落 `.agents/drafts/<日期>-<主题>.md`，版本控制忽略，可由流水重新生成。
+- 本模块落 `.agents/rules/`，按需加载：根 `AGENTS.md` 任务路由命中草稿审核、晋升或处置时先读本模块。
+
+## 起草
+
+- 起草判据两条：跨会话仍成立；跨项目适用或写清边界。同一结论被独立写出两次优先起草。
+- 固定排除：临时路径、一次性命令、七天内可能变化的状态。
+- 新草稿一律写 `review: needs-review`，并在任务结束自检时报告待分拣数量；超过 7 天未分拣的在全面自检时列出。
+
+## 审核：三态与状态转换
+
+- 状态只有三态：`needs-review`（待人分拣）、`approved`（人已批准，可晋升）、`rejected`（人已否决，保留存档）。
+- 状态转换只凭人的明确指令：agent 不得自行设置 `approved`，不得自行设置 `rejected`。
+- 状态缺失、非法或与人的指令不一致时，按 `needs-review` 处理并停止晋升，报人裁定。
+
+## 晋升
+
+- 晋升只在 `approved` 后发生，分拣批准是唯一的晋升触发；批准时以分拣决定加流水来源作证据。
+- 晋升目标只限四处：根 `MEMORY.md`、`DESIGN.md`、`.agents/rules/`、`100_Works/<项目>/`。
+- 正式归属唯一：内容只落一个正式位置，其他位置只放链接指针，不复制正文。
+- 草稿的去向（批准、否决、暂缓）记入当日流水。
+
+## 否决：保留不删
+
+- 人否决的候选置 `review: rejected`，移入 `.agents/drafts/rejected/` 保留，不删除。
+- 移入时在当日流水记一笔（候选主题与否决日期）。
+- 已否决的候选不再重复起草；新证据使同一结论值得重审时，先报人，不自行从 `rejected/` 复活。
+
+## 保活
+
+- 活性：靠任务结束自检报告待分拣数量、全面自检列超期草稿，证明本模块被真实触发。
+- fail-closed：状态非法即停晋升；agent 自批、自否即违规，命中时停下报人。
+- 未退化：每周复核抽查 `rejected/` 与流水记录是否对得上（有移入必有流水一笔），对不上只提醒不自动修复。
+```
+
 抽取脚本随骨架一起写，供阶段 6 调用（`.agents/scripts/extract.py`）：
 
 ```python
@@ -565,13 +629,25 @@ git config user.email "<邮箱>"
 `.gitignore` 内容（照抄，不增不减；后续追加需记入决策记录（`900_ADR/`））：
 
 ```gitignore
-400_Code/
-.agents/drafts/
-.agents/skills/
+400_Code/*
+!400_Code/.gitkeep
+.agents/drafts/*
+!.agents/drafts/.gitkeep
+.agents/skills/*
+!.agents/skills/.gitkeep
 .artifacts/
-000_Inbox/
+000_Inbox/*
+!000_Inbox/010_Downloads/
+000_Inbox/010_Downloads/*
+!000_Inbox/010_Downloads/.gitkeep
+!000_Inbox/imported/
+000_Inbox/imported/*
+!000_Inbox/imported/.gitkeep
 200_Digital_assets/210_Personal-record/
+__pycache__/
 ```
+
+忽略口径说明：运行时目录改用「忽略内容（`/*`）加 `.gitkeep` 否定例外」的写法，目录内容仍整体忽略，只有占位文件进版本控制（见「建目录」一节的空目录占位清单）；`.artifacts/` 保持目录级忽略，其 `index.json` 靠首次提交时 `git add -f` 强制加入；敏感区保持目录级忽略且不开任何例外。
 
 `.editorconfig`（只作用于根仓库）：
 
@@ -609,7 +685,7 @@ git commit -m "chore: create workspace skeleton"
 
 `.artifacts/index.json` 是索引例外：`.artifacts/` 整体忽略，索引仍须纳入版本控制，提交前用 `git add -f` 强制加入一次，之后它作为已跟踪文件正常提交。重跑时索引已跟踪，强制加入是空操作。
 
-提交前看 `git status` 输出确认：被忽略的目录（`400_Code/`、`.artifacts/`、`000_Inbox/`、`210_Personal-record/`、`.agents/skills/`、`.agents/drafts/`）不得出现在待提交列表里，唯一的例外是强制加入的 `.artifacts/index.json`。
+提交前看 `git status` 输出确认：被忽略的目录（`400_Code/`、`.artifacts/`、`000_Inbox/`、`210_Personal-record/`、`.agents/skills/`、`.agents/drafts/`）的内容不得出现在待提交列表里，例外只有强制加入的 `.artifacts/index.json` 与各空目录的 `.gitkeep` 占位。
 
 如果用户明确不要根版本控制仓库：跳过建仓库，资产清单与产物索引暂行放在各项目目录内，根仓库建成后再收进根仓库。不要因此停下整个部署。
 
